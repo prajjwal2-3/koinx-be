@@ -60,44 +60,43 @@ This approach balances cost, reliability, and scalability, making it ideal for c
 
 Docker Image: https://hub.docker.com/r/prajjwaljson200/koinx
 
-API Endpoints for Koinx
-1. Health Check
-URL: https://koinx-c52s.onrender.com
-Method: GET
-Description: This endpoint checks the health of the server and ensures it is running properly.
-2. Coin Stats
-URL: https://koinx-c52s.onrender.com/coins/stats?coin=<coin_name>
+# Koinx API Endpoints
 
-Method: GET
+## 1. Health Check
+- **URL:** `https://koinx-c52s.onrender.com`
+- **Method:** `GET`
+- **Description:** This endpoint checks the health of the server and ensures it is running properly.
 
-Query Parameters:
+---
 
-coin (required): The name of the cryptocurrency (e.g., bitcoin, ethereum).
+## 2. Coin Stats
+- **URL:** `https://koinx-c52s.onrender.com/coins/stats?coin=<coin_name>`
+- **Method:** `GET`
+- **Query Parameters:**
+  - `coin` (required): The name of the cryptocurrency (e.g., `bitcoin`, `ethereum`).
+  
+- **Response Example:**
+  ```json
+  {
+    "price": 94384,
+    "marketCap": 1869291548664.941,
+    "24hChange": 0.6255164736666748
+  }
+  
+---
+
+## 3. Coin Deviation
+- **URL:** `https://koinx-c52s.onrender.com/coins/deviation?coin=<coin_name>``
+
+- **Method:** GET
+
+- **Query Parameters:** coin (required): The name of the cryptocurrency (e.g., bitcoin, ethereum).
 Response Example:
 
-json
-Copy code
-{
-  "price": 94384,
-  "marketCap": 1869291548664.941,
-  "24hChange": 0.6255164736666748
-}
-Description: This endpoint returns the latest price, market capitalization, and 24-hour price change for the specified coin.
-
-3. Coin Deviation
-URL: https://koinx-c52s.onrender.com/coins/deviation?coin=<coin_name>
-
-Method: GET
-
-Query Parameters:
-
-coin (required): The name of the cryptocurrency (e.g., bitcoin, ethereum).
-Response Example:
-
-json
-Copy code
+```bash
 {
   "deviation": 74.72073005531999
 }
+```
 Description: This endpoint calculates the price deviation of the specified coin.
 
