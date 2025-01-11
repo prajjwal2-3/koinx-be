@@ -33,3 +33,25 @@ docker run -p 8080:8080 -e PORT=8080 -e DATABASE_URL="mongodb connection string"
 This setup uses a multi-stage build to optimize the Docker image for production. The multi-stage build helps keep the final image size smaller by excluding unnecessary build dependencies.
 
 
+### Deployment Strategies
+
+1. **Containerizing the Entire Application on EC2**  
+   - **Pros:** Simple setup, consistent environment, easy to scale.  
+   - **Cons:** Resources are always allocated (long running process), even for lightweight background tasks, leading to higher costs. Any failure impacts the entire application.
+
+2. **Using Kubernetes with a Cron Resource**  
+   - **Pros:** Scalable, robust, and ideal for managing complex workloads.  
+   - **Cons:** Overhead of setting up and managing Kubernetes for a lightweight job. Higher costs and complexity for small-scale tasks.
+
+3. **My Approach: Splitting into Two Services**  
+   - **HTTP Service:** Handles API requests, containerized and deployed on EC2 (If serving verr high traffic) otherwise lambda.  
+   - **Background Job:** AWS Lambda fetches data from CoinGecko and updates the database. EventBridge invokes the Lambda every 2 hours.
+
+   **Pros:**  
+   - Cost-efficient: Lambda runs only when needed.  
+   - Resilient: HTTP service and background job are independent, ensuring no downtime if one fails.  
+   - Simplified setup for lightweight background tasks.
+   **Cons:** Limited control over serverless environments and potential latency in Lambda cold starts.  
+
+This approach balances cost, reliability, and scalability, making it ideal for current needs.
+
